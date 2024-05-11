@@ -17,6 +17,8 @@ const userController = {
     async getSingleUser(req, res) {
         try {
             const user = await User.findOne({ _id: req.params.id })
+                .populate({ path: 'friends', select: "-__v" })
+                .populate({ path: 'thoughts', select: "-__v" })
                 .select('-__v')
             res.json(user)
         } catch (err) {
@@ -70,7 +72,7 @@ const userController = {
         try {
             const user = await User.findOneAndUpdate(
                 { _id: req.params.id },
-                { $push: { friends: req.params.friendsId } },
+                { $push: { friends: req.params.friendId } },
                 { new: true, runValidators: true }
             )
 
@@ -97,7 +99,7 @@ const userController = {
                 res.status(404).json({ message: "No user with such Id" })
             }
             res.json(user)
-            
+
         } catch (err) {
             res.status(500).json(err)
         }

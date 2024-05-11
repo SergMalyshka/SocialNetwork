@@ -47,7 +47,7 @@ const thoughtSchema = new Schema({
     username: {
         type: String,
         required: true,
-        ref: 'User'
+        ref: 'user'
     },
     reactoins: [ReactionSchema]
 }, {
@@ -67,4 +67,4 @@ const Thought = model('Thought', thoughtSchema)
 
 
 
-model.exports = Thought;
+module.exports = Thought;
